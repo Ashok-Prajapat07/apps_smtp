@@ -1,0 +1,57 @@
+https://myaccount.google.com/security.        passs change 
+
+https://support.google.com/mail/answer/7126229?hl=en#zippy=%2Cschritt-smtp--und-andere-einstellungen-im-e-mail-client-%C3%A4ndern%2Cschritt-imap-aktivieren          smtp port
+
+
+
+
+
+#code
+
+
+const { log } = require('console');
+const nodemailer = require('nodemailer');
+
+const html = `
+<h1>Welcome to Shoppy</h1>
+<p>Ram  </p>
+`;
+
+async function sendBulkEmails() {
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'keenonlineudr@gmail.com',
+      pass: 'wlntmxxfqhsnmkut',
+    },
+  });
+
+  const recipients = [
+    'ashokaprajapat.07@gmail.com',
+    'jitendrameta08@gmail.com',
+    // Add more recipients as needed
+  ];
+
+  try {
+    const promises = recipients.map((recipient) => {
+      return transporter.sendMail({
+        from: 'KEEN <keenonlineudr@gmail.com>',
+        to: recipient,
+        subject: 'Testing',
+        html: html,
+      });
+    });
+
+    const results = await Promise.all(promises);
+
+    results.forEach((info) => {
+      console.log('Message sent: ' + info.messageId);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+sendBulkEmails().catch((e) => console.log(e));
